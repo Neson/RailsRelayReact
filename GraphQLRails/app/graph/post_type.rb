@@ -5,4 +5,6 @@ PostType = GraphQL::ObjectType.define do
   field :id, !types.ID
   field :subject, !types.String
   field :content, !types.String
+
+  field :comments, -> { !types[!CommentType] }
 end
