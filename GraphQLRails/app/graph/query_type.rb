@@ -13,4 +13,9 @@ QueryType = GraphQL::ObjectType.define do
     argument :id, !types.ID
     resolve -> (_obj, args, _ctx) { Comment.find(args['id']) }
   end
+
+  field :latestPost do
+    type PostType
+    resolve -> (_obj, _args, _ctx) { Post.last }
+  end
 end
