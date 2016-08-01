@@ -13,6 +13,19 @@ QueryType = GraphQL::ObjectType.define do
     }
   end
 
+  field :posts do
+    type -> { PostConnectionType }
+
+    argument :first, types.Int
+    argument :last, types.Int
+    argument :before, types.String
+    argument :after, types.String
+
+    resolve -> (_obj, args, _ctx) {
+      PostConnection.new(Post, first: args['first'], after: args['after'], last: args['last'], before: args['before'])
+    }
+  end
+
   field :post do
     type PostType
     argument :id, !types.ID
