@@ -14,11 +14,12 @@ Relay.injectNetworkLayer(
 );
 
 import PostsIndexContainer from 'containers/PostsIndexContainer';
+import PostContainer from 'containers/PostContainer';
 
 export default class App extends Component {
   render() {
     return (
-      <PostsIndexContainer/>
+      <PostContainer/>
     );
   }
 }
