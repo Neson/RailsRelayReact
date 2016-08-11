@@ -7,6 +7,8 @@ import Relay from 'react-relay';
 import {
   StyleSheet,
   ScrollView,
+  View,
+  TouchableOpacity,
   Text
 } from 'react-native';
 
@@ -14,12 +16,17 @@ import PostTitle from 'components/PostTitle';
 
 class Post extends Component {
   render() {
-    let { post } = this.props;
+    let { post, onBackPress } = this.props;
 
     return (
       <ScrollView style={styles.container}>
         <PostTitle post={post} />
         <Text style={styles.content}>{post.content}</Text>
+        <View style={styles.actions}>
+          <TouchableOpacity onPress={onBackPress}>
+            <Text style={styles.actionText}>Back</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     );
   }
@@ -39,10 +46,15 @@ export default Relay.createContainer(Post, {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 32,
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
+    backgroundColor: '#FFF'
   },
   content: {
     marginVertical: 8,
     paddingHorizontal: 2
+  },
+  actions: {},
+  actionText: {
+    textDecorationLine: 'underline'
   }
 });
