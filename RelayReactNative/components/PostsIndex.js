@@ -14,13 +14,20 @@ import PostTitle from 'components/PostTitle';
 
 class PostsIndex extends Component {
   render() {
-    let { edges: postEdges } = this.props.posts;
+    let { posts: postsConnection, onPostPress } = this.props;
+    let { edges: postEdges } = postsConnection;
 
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.title}>Listing Posts</Text>
         {(() => {
-          return postEdges.map(edge => <PostTitle post={edge.node} key={edge.__dataID__} />);
+          return postEdges.map(edge => (
+            <PostTitle
+              post={edge.node}
+              key={edge.__dataID__}
+              onPress={onPostPress && onPostPress.bind(this, edge.node.id)}
+            />
+          ));
         })()}
       </ScrollView>
     );
@@ -33,6 +40,7 @@ export default Relay.createContainer(PostsIndex, {
       fragment on PostConnection {
         edges {
           node {
+            id
             ${PostTitle.getFragment('post')}
           }
         }
@@ -44,7 +52,8 @@ export default Relay.createContainer(PostsIndex, {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 32,
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
+    backgroundColor: '#FFF'
   },
   title: {
     fontSize: 32,
